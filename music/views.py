@@ -6,6 +6,8 @@ from rest_framework import status
 from music.models import Songs
 from music.models import Playlist
 from django.contrib.auth.models import User 
+from music.serializers import Userserializer,PlaylistSerializer
+
 # Create your views here.
 class SongsList(APIView):
 	permission_classes = [AllowAny]
@@ -20,9 +22,11 @@ class SongsList(APIView):
 class PlaylistList(APIView):
 	permission_classes = [AllowAny]
 	def get(self,request):
-		playlist = Playlist.objects.select_related("user").all().values()
+		playlist = Playlist.objects.all().values()
+
+		data = PlaylistSerializer(playlist,many=True).data
 		return Response({
-			"data":playlist,
+			"data":data,
 			"status":status.HTTP_200_OK
 			})
 
@@ -30,8 +34,18 @@ class UserList(APIView):
 	permission_classes = [AllowAny]
 	def get(self,request):
 		users = User.objects.all().values()
+
+		data = Userserializer(users,many=True).data
+		# new_users_list = []
+		# for user in users:
+		# 	playlist_count = len(Playlist.objects.filter(user = user))
+			
+		# 	new_users_list.append({
+
+		# 		})
+
 		return Response({
-			"data":users,
+			"data":data,
 			"status":status.HTTP_200_OK
 			})
 
