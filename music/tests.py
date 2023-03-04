@@ -1,3 +1,5 @@
+import json
+
 from django.test import TestCase, Client
 
 
@@ -27,6 +29,13 @@ class APIRoutesTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
+    def test_total_users(self):
+        response = self.client.get('/users')
+
+        json_response = response.json()
+
+        self.assertTrue('total_playlists_count' in json_response['data'][0])
+
     def test_playlists(self):
         """
         Get all playlists with their total song as an attribute and user's object in the JSON object.
@@ -48,6 +57,13 @@ class APIRoutesTest(TestCase):
         response = self.client.get('/playlists')
 
         self.assertEqual(response.status_code, 200)
+
+    def test_total_playlist(self):
+        response = self.client.get('/playlists')
+
+        json_response = response.json()
+
+        self.assertTrue('total_songs_count' in json_response['data'][0])
 
     def test_songs(self):
         """
@@ -73,3 +89,21 @@ class APIRoutesTest(TestCase):
         response = self.client.get('/songs')
 
         self.assertEqual(response.status_code, 200)
+
+        json_response = response.json()
+
+        self.assertTrue('playlist' in json_response['data'][0])
+
+    def test_total_songs(self):
+        response = self.client.get('/songs')
+
+        json_response = json.loads(response.body)
+
+        self.assertTrue('playlist' in json_response['data'][0])
+
+    def test_total_songs_user(self):
+        response = self.client.get('/songs')
+
+        json_response = response.json()
+
+        self.assertTrue('user' in json_response['data'][0]['playlist'])
