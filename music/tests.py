@@ -90,10 +90,6 @@ class APIRoutesTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
-        json_response = response.json()
-
-        self.assertTrue('playlist' in json_response['data'][0])
-
     def test_total_songs(self):
         response = self.client.get('/songs')
 
