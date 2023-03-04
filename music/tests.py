@@ -1,14 +1,15 @@
 import json
 
-from django.test import TestCase, Client
-
+from django.test import TestCase
+import requests
 
 # Create your tests here.
 
 
 class APIRoutesTest(TestCase):
     def setUp(self):
-        self.client = Client()
+        self.client = requests
+        self.host = 'http://127.0.0.1:8000'
 
     def test_users(self):
         """
@@ -25,12 +26,12 @@ class APIRoutesTest(TestCase):
             ]
         }
         """
-        response = self.client.get('/users')
+        response = self.client.get(self.host + '/users')
 
         self.assertEqual(response.status_code, 200)
 
     def test_total_users(self):
-        response = self.client.get('/users')
+        response = self.client.get(self.host + '/users')
 
         json_response = response.json()
 
@@ -54,12 +55,12 @@ class APIRoutesTest(TestCase):
             ]
         }
         """
-        response = self.client.get('/playlists')
+        response = self.client.get(self.host + '/playlists')
 
         self.assertEqual(response.status_code, 200)
 
     def test_total_playlist(self):
-        response = self.client.get('/playlists')
+        response = self.client.get(self.host + '/playlists')
 
         json_response = response.json()
 
@@ -86,19 +87,19 @@ class APIRoutesTest(TestCase):
             ]
         }
         """
-        response = self.client.get('/songs')
+        response = self.client.get(self.host + '/songs')
 
         self.assertEqual(response.status_code, 200)
 
     def test_total_songs(self):
-        response = self.client.get('/songs')
+        response = self.client.get(self.host + '/songs')
 
         json_response = response.json()
 
         self.assertTrue('playlist' in json_response['data'][0])
 
     def test_total_songs_user(self):
-        response = self.client.get('/songs')
+        response = self.client.get(self.host + '/songs')
 
         json_response = response.json()
 
