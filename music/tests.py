@@ -32,7 +32,7 @@ class APIRoutesTest(TestCase):
     def test_total_users(self):
         response = self.client.get('/users')
 
-        json_response = json.loads(response.body)
+        json_response = response.json()
 
         self.assertTrue('total_playlists_count' in json_response['data'][0])
 
@@ -61,7 +61,7 @@ class APIRoutesTest(TestCase):
     def test_total_playlist(self):
         response = self.client.get('/playlists')
 
-        json_response = json.loads(response.body)
+        json_response = response.json()
 
         self.assertTrue('total_songs_count' in json_response['data'][0])
 
@@ -90,7 +90,7 @@ class APIRoutesTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
-        json_response = json.loads(response.body)
+        json_response = response.json()
 
         self.assertTrue('playlist' in json_response['data'][0])
 
@@ -104,6 +104,6 @@ class APIRoutesTest(TestCase):
     def test_total_songs_user(self):
         response = self.client.get('/songs')
 
-        json_response = json.loads(response.body)
+        json_response = response.json()
 
         self.assertTrue('user' in json_response['data'][0]['playlist'])
