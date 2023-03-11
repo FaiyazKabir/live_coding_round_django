@@ -15,8 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+import music.account.account_pb2_grpc as account_pb2_grpc
+import music.playlist.playlist_pb2_grpc as playlist_pb2_grpc
+from music.services import UserService,PlaylistService
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("",include("music.urls"))
 ]
+
+def grpc_handlers(server):
+    account_pb2_grpc.add_UserControllerServicer_to_server(UserService.as_servicer(), server)
+    playlist_pb2_grpc.add_PlaylistControllerServicer_to_server(PlaylistService.as_servicer(),server)

@@ -12,7 +12,7 @@ from music.serializers import Userserializer,PlaylistSerializer,SongsSerializer
 class SongsList(APIView):
 	permission_classes = [AllowAny]
 	def get(self,request):
-		songs = Songs.objects.all()
+		songs = Songs.objects.select_related("playlist").prefetch_related("playlist__user").all()[:100]
 		data = SongsSerializer(songs,many=True).data
 		return Response({
 			"data":data,

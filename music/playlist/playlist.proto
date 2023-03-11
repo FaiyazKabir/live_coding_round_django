@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package playlist;
+
+import "google/protobuf/empty.proto";
+
+service PlaylistController {
+    rpc List(PlaylistListRequest) returns (stream Playlist) {}
+    rpc Create(Playlist) returns (Playlist) {}
+    rpc Retrieve(PlaylistRetrieveRequest) returns (Playlist) {}
+    rpc Update(Playlist) returns (Playlist) {}
+    rpc Destroy(Playlist) returns (google.protobuf.Empty) {}
+}
+
+message User {
+    int32 id = 1;
+    string username = 2;
+    string email = 3;
+}
+
+message Playlist {
+    int64 id = 1;
+    string name = 2;
+    User user = 3;
+    int64 total_songs_count = 4;
+}
+
+message PlaylistListRequest {
+}
+
+message PlaylistRetrieveRequest {
+    int64 id = 1;
+}
