@@ -26,5 +26,5 @@ class PlaylistService(generics.ModelService):
         # serializer.is_valid(raise_exception=False)
         print("LINE 24",serializer.data)
         
-        print("LINE 28")
-        return serializer.data
+        print("LINE 28",serializer.message)
+        return serializer.message

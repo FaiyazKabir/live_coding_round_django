@@ -49,7 +49,7 @@ class UserProtoSerializer(proto_serializers.ModelProtoSerializer):
     class Meta:
         model = User
         proto_class = music.account.account_pb2.User
-        fields = ['username', 'email', 'groups']
+        fields = ['id','username', 'email']
 	
 class PlaylistProtoSerializer(proto_serializers.ModelProtoSerializer):
 	total_songs_count = serializers.SerializerMethodField()
